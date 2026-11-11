@@ -1,61 +1,92 @@
+
 .pagina-servicos {
-    padding: 50px 8%;
-    min-height: 500px;
-    background-color: #fffaf7;
+  padding: 50px 8%;
+  min-height: 500px;
+  background-color: #fffaf7;
+}
+
+.titulo {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.titulo h2 {
+  color: #9b6b70;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.titulo p {
+  color: #81716d;
+}
+
+.lista-servicos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 25px;
+}
+
+.card-servico {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.imagem-servico {
+  height: 180px;
+  background-color: #f7e9e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a66e75;
+}
+
+.informacoes-servico {
+  padding: 20px;
+}
+
+.informacoes-servico h3 {
+  color: #514542;
+  margin-bottom: 10px;
+}
+
+.informacoes-servico p {
+  color: #81716d;
+  margin-bottom: 15px;
+}
+
+.informacoes-servico strong {
+  color: #9b6b70;
+  font-size: 19px;
+}
+
+.informacoes-servico button {
+  display: block;
+  width: 100%;
+  margin-top: 18px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #9b6b70;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.informacoes-servico button:hover {
+  background-color: #80545a;
+}
+
+.mensagem {
+  margin-top: 12px;
+  color: #9b6b70;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .pagina-servicos {
+    padding: 35px 5%;
   }
-  
-  .titulo {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  
-  .titulo h2 {
-    color: #9b6b70;
-    font-size: 30px;
-    margin-bottom: 10px;
-  }
-  
-  .titulo p {
-    color: #81716d;
-  }
-  
-  .lista-servicos {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 25px;
-  }
-  
-  .card-servico {
-    background-color: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  }
-  
-  .imagem-servico {
-    height: 180px;
-    background-color: #f7e9e5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #a66e75;
-  }
-  
-  .informacoes-servico {
-    padding: 20px;
-  }
-  
-  .informacoes-servico h3 {
-    color: #514542;
-    margin-bottom: 10px;
-  }
-  
-  .informacoes-servico p {
-    color: #81716d;
-    margin-bottom: 15px;
-  }
-  
-  .informacoes-servico strong {
-    color: #9b6b70;
-    font-size: 19px;
-  }
+}

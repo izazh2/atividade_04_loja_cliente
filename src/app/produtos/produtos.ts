@@ -1,43 +1,58 @@
-import { Component } from '@angular/core';
+
+import { Component, OnInit } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { Carrinho } from '../service/carrinho';
+import { ApiService, ItemApi } from '../service/api.service';
 
 @Component({
   selector: 'app-produtos',
+  standalone: true,
   imports: [CurrencyPipe],
   templateUrl: './produtos.html',
   styleUrl: './produtos.css'
 })
-export class ProdutosComponent {
+export class ProdutosComponent implements OnInit {
 
+  produtos: any[] = [];
   mensagem = '';
+  carregando = true;
+  erro = '';
 
-  constructor(private carrinho: Carrinho) {}
+  constructor(
+    private carrinho: Carrinho,
+    private apiService: ApiService
+  ) {}
 
-  produtos = [
-    {
-      id: 1,
-      nome: 'Creme Hidratante',
-      descricao: 'Hidratação e cuidado para sua pele.',
-      preco: 49.90
-    },
-    {
-      id: 2,
-      nome: 'Sérum Facial',
-      descricao: 'Ajuda a manter a pele saudável.',
-      preco: 59.90
-    },
-    {
-      id: 3,
-      nome: 'Sabonete Facial',
-      descricao: 'Limpeza suave para o rosto.',
-      preco: 29.90
-    }
-  ];
+  ngOnInit(): void {
+    this.listarProdutos();
+  }
 
-  adicionarAoCarrinho(produto: any) {
+  listarProdutos(): void {
+    this.carregando = true;
+    this.erro = '';
+
+    this.apiService.listarProdutos().subscribe({
+      next: (dados: ItemApi[]) => {
+        this.produtos = dados.map(item => ({
+          id: item.idItem,
+          nome: item.item,
+          descricao: item.descricaoItem,
+          preco: item.preco,
+          tipo: item.tipoItem
+        }));
+
+        this.carregando = false;
+      },
+      error: (erro) => {
+        console.error('Erro ao buscar produtos:', erro);
+        this.erro = 'Não foi possível carregar os produtos.';
+        this.carregando = false;
+      }
+    });
+  }
+
+  adicionarAoCarrinho(produto: any): void {
     this.carrinho.adicionarProduto(produto);
     this.mensagem = produto.nome + ' foi adicionado ao carrinho!';
   }
-
 }

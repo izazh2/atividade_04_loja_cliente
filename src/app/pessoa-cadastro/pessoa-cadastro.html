@@ -1,57 +1,152 @@
-<main class="pagina-cadastro">
 
-    <section class="formulario">
-  
-      <h2>Cadastro de Cliente</h2>
-  
-      <p>Preencha seus dados para se cadastrar.</p>
-  
-      <form (ngSubmit)="cadastrarCliente()">
-  
-        <label for="nome">Nome completo</label>
-        <input
-          type="text"
-          id="nome"
-          name="nome"
-          [(ngModel)]="cliente.nome"
-          placeholder="Digite seu nome"
-          required
-        >
-  
-        <label for="cpf">CPF</label>
-        <input
-          type="text"
-          id="cpf"
-          name="cpf"
-          [(ngModel)]="cliente.cpf"
-          placeholder="Digite seu CPF"
-          required
-        >
-  
-        <label for="email">E-mail</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          [(ngModel)]="cliente.email"
-          placeholder="Digite seu e-mail"
-          required
-        >
-  
-        <label for="telefone">Telefone</label>
-        <input
-          type="tel"
-          id="telefone"
-          name="telefone"
-          [(ngModel)]="cliente.telefone"
-          placeholder="Digite seu telefone"
-          required
-        >
-  
-        <button type="submit">Cadastrar</button>
-  
-      </form>
-  
-    </section>
-  
-  </main>
+<main class="pagina-cadastro">
+  <section class="formulario">
+
+    <h2>Cadastro de Cliente</h2>
+    <p>Preencha seus dados para se cadastrar.</p>
+
+    <form
+      (ngSubmit)="cadastrarCliente(formCadastro)"
+      #formCadastro="ngForm"
+      novalidate
+    >
+
+      <label for="nome">Nome completo *</label>
+      <input
+        type="text"
+        id="nome"
+        name="nome"
+        [(ngModel)]="cliente.nome"
+        #nome="ngModel"
+        required
+      >
+      <small *ngIf="nome.invalid && (nome.touched || tentouEnviar)">
+        Informe seu nome completo.
+      </small>
+
+      <label for="cpf">CPF *</label>
+      <input
+        type="text"
+        id="cpf"
+        name="cpf"
+        [(ngModel)]="cliente.cpf"
+        #cpf="ngModel"
+        maxlength="11"
+        minlength="11"
+        pattern="[0-9]{11}"
+        required
+      >
+      <small *ngIf="cpf.invalid && (cpf.touched || tentouEnviar)">
+        Informe um CPF com 11 números.
+      </small>
+
+      <label for="dataNascimento">Data de nascimento *</label>
+      <input
+        type="date"
+        id="dataNascimento"
+        name="dataNascimento"
+        [(ngModel)]="cliente.dataNascimento"
+        #dataNascimento="ngModel"
+        required
+      >
+      <small *ngIf="dataNascimento.invalid && (dataNascimento.touched || tentouEnviar)">
+        Informe sua data de nascimento.
+      </small>
+
+      <label for="sexo">Sexo *</label>
+      <select
+        id="sexo"
+        name="sexo"
+        [(ngModel)]="cliente.sexo"
+        #sexo="ngModel"
+        required
+      >
+        <option value="">Selecione</option>
+        <option value="F">Feminino</option>
+        <option value="M">Masculino</option>
+      </select>
+      <small *ngIf="sexo.invalid && (sexo.touched || tentouEnviar)">
+        Selecione uma opção.
+      </small>
+
+      <label for="email">E-mail *</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="cliente.email"
+        #email="ngModel"
+        required
+      >
+      <small *ngIf="email.invalid && (email.touched || tentouEnviar)">
+        Informe um e-mail válido.
+      </small>
+
+      <label for="telefone">Telefone *</label>
+      <input
+        type="tel"
+        id="telefone"
+        name="telefone"
+        [(ngModel)]="cliente.telefone"
+        #telefone="ngModel"
+        required
+      >
+      <small *ngIf="telefone.invalid && (telefone.touched || tentouEnviar)">
+        Informe seu telefone.
+      </small>
+
+      <h3>Endereço</h3>
+
+      <label for="cep">CEP *</label>
+      <input
+        type="text"
+        id="cep"
+        name="cep"
+        [(ngModel)]="cliente.enderecos[0].cep"
+        #cep="ngModel"
+        maxlength="8"
+        minlength="8"
+        pattern="[0-9]{8}"
+        required
+      >
+      <small *ngIf="cep.invalid && (cep.touched || tentouEnviar)">
+        Informe um CEP com 8 números.
+      </small>
+
+      <label for="numero">Número *</label>
+      <input
+        type="text"
+        id="numero"
+        name="numero"
+        [(ngModel)]="cliente.enderecos[0].numero"
+        #numero="ngModel"
+        required
+      >
+      <small *ngIf="numero.invalid && (numero.touched || tentouEnviar)">
+        Informe o número do endereço.
+      </small>
+
+      <label for="complemento">Complemento *</label>
+      <input
+        type="text"
+        id="complemento"
+        name="complemento"
+        [(ngModel)]="cliente.enderecos[0].complemento"
+        #complemento="ngModel"
+        required
+      >
+      <small *ngIf="complemento.invalid && (complemento.touched || tentouEnviar)">
+        Informe o complemento do endereço.
+      </small>
+
+      <p class="mensagem-erro" *ngIf="mensagem && erro">
+        {{ mensagem }}
+      </p>
+
+      <button type="submit" [disabled]="carregando">
+        {{ carregando ? 'Cadastrando...' : 'Cadastrar' }}
+      </button>
+
+    </form>
+  </section>
+</main>
