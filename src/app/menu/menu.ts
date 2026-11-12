@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -8,5 +9,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './menu.css'
 })
 export class MenuComponent {
+
+  get clienteLogado(): boolean {
+    return localStorage.getItem('idPessoa') !== null;
+  }
 
 }

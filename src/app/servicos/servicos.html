@@ -3,55 +3,86 @@
 
   <section class="titulo">
     <h2>Nossos Serviços</h2>
-    <p>Cuide de você com nossos tratamentos e serviços.</p>
+    <p>Conheça nossos tratamentos e serviços de estética e bem-estar.</p>
   </section>
 
   @if (carregando) {
     <p class="mensagem">Carregando serviços...</p>
-  }
-
-  @if (erro) {
+  } @else if (erro) {
     <p class="mensagem">{{ erro }}</p>
-  }
+  } @else {
 
-  @if (!carregando && !erro && servicos.length === 0) {
-    <p class="mensagem">Nenhum serviço disponível no momento.</p>
-  }
+    <section class="filtros-categorias">
+      <h3>Filtrar por categoria</h3>
 
-  @if (!carregando && !erro && servicos.length > 0) {
-    <section class="lista-servicos">
+      <button
+        type="button"
+        (click)="selecionarCategoria(null)"
+        [class.ativa]="categoriaSelecionada === null"
+      >
+        Todas
+      </button>
 
-      @for (servico of servicos; track servico.id) {
-        <article class="card-servico">
-
-          <div class="imagem-servico">
-            <span>Serviço</span>
-          </div>
-
-          <div class="informacoes-servico">
-
-            <h3>{{ servico.nome }}</h3>
-
-            <p>{{ servico.descricao }}</p>
-
-            <strong>
-              {{ servico.preco | currency:'BRL' }}
-            </strong>
-
-            <button (click)="adicionarAoCarrinho(servico)">
-              Adicionar ao carrinho
-            </button>
-
-            @if (mensagem) {
-              <p class="mensagem">{{ mensagem }}</p>
-            }
-
-          </div>
-
-        </article>
+      @for (categoria of categorias; track categoria.idCategoria) {
+        <button
+          type="button"
+          (click)="selecionarCategoria(categoria.idCategoria)"
+          [class.ativa]="categoriaSelecionada === categoria.idCategoria"
+        >
+          {{ categoria.nome }}
+        </button>
       }
-
     </section>
+
+    @if (servicosFiltrados.length > 0) {
+
+      <section class="lista-servicos">
+
+        @for (servico of servicosFiltrados; track servico.id) {
+
+          <article class="card-servico">
+
+            <div class="imagem-servico">
+              <span>Serviço</span>
+            </div>
+
+            <div class="informacoes-servico">
+
+              <h3>{{ servico.nome }}</h3>
+
+              <p>{{ servico.descricao }}</p>
+
+              <p>Categoria: {{ servico.categoria }}</p>
+
+              <strong>
+                {{ servico.preco | currency:'BRL' }}
+              </strong>
+
+              <button
+                type="button"
+                (click)="adicionarAoCarrinho(servico)"
+              >
+                Adicionar ao carrinho
+              </button>
+
+            </div>
+
+          </article>
+
+        }
+
+      </section>
+
+    } @else {
+      <p class="mensagem">
+        Nenhum serviço encontrado nesta categoria.
+      </p>
+    }
+
+    @if (mensagem) {
+      <p class="mensagem">{{ mensagem }}</p>
+    }
+
   }
 
 </main>

@@ -1,39 +1,88 @@
+
 <main class="pagina-produtos">
 
-    <section class="titulo">
-      <h2>Nossos Produtos</h2>
-      <p>Confira nossos produtos e encontre o que combina com você.</p>
-    </section>
-  
-    <section class="lista-produtos">
-  
-      @for (produto of produtos; track produto.id) {
-        <article class="card-produto">
-  
-          <div class="imagem-produto">
-            <span>Produto</span>
-          </div>
-  
-          <div class="informacoes-produto">
-            <h3>{{ produto.nome }}</h3>
-  
-            <p>{{ produto.descricao }}</p>
-  
-            <strong>
-              {{ produto.preco | currency:'BRL' }}
-            </strong>
-  
-            <button (click)="adicionarAoCarrinho(produto)">
-                Adicionar ao carrinho 
-                @if (mensagem) {
-                <p class="mensagem">{{ mensagem }}</p>
-              }
-            </button>
-          </div>
-  
-        </article>
+  <section class="titulo">
+    <h2>Nossos Produtos</h2>
+    <p>Confira nossos produtos e encontre o que combina com você.</p>
+  </section>
+
+  @if (carregando) {
+    <p class="mensagem">Carregando produtos...</p>
+  } @else if (erro) {
+    <p class="mensagem">{{ erro }}</p>
+  } @else {
+
+    <section class="filtros-categorias">
+      <h3>Filtrar por categoria</h3>
+
+      <button
+        type="button"
+        (click)="selecionarCategoria(null)"
+        [class.ativa]="categoriaSelecionada === null"
+      >
+        Todas
+      </button>
+
+      @for (categoria of categorias; track categoria.idCategoria) {
+        <button
+          type="button"
+          (click)="selecionarCategoria(categoria.idCategoria)"
+          [class.ativa]="categoriaSelecionada === categoria.idCategoria"
+        >
+          {{ categoria.nome }}
+        </button>
       }
-  
     </section>
-  
-  </main>
+
+    @if (produtosFiltrados.length > 0) {
+
+      <section class="lista-produtos">
+
+        @for (produto of produtosFiltrados; track produto.id) {
+
+          <article class="card-produto">
+
+            <div class="imagem-produto">
+              <span>Produto</span>
+            </div>
+
+            <div class="informacoes-produto">
+
+              <h3>{{ produto.nome }}</h3>
+
+              <p>{{ produto.descricao }}</p>
+
+              <p>Categoria: {{ produto.categoria }}</p>
+
+              <strong>
+                {{ produto.preco | currency:'BRL' }}
+              </strong>
+
+              <button
+                type="button"
+                (click)="adicionarAoCarrinho(produto)"
+              >
+                Adicionar ao carrinho
+              </button>
+
+            </div>
+
+          </article>
+
+        }
+
+      </section>
+
+    } @else {
+      <p class="mensagem">
+        Nenhum produto encontrado nesta categoria.
+      </p>
+    }
+
+    @if (mensagem) {
+      <p class="mensagem">{{ mensagem }}</p>
+    }
+
+  }
+
+</main>

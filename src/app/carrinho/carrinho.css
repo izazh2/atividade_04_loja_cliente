@@ -70,3 +70,29 @@
     padding: 60px 20px;
     color: #81716d;
   }
+
+
+.controle-quantidade {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.controle-quantidade button,
+.botao-remover {
+  border: none;
+  border-radius: 6px;
+  padding: 7px 12px;
+  cursor: pointer;
+}
+
+.controle-quantidade button {
+  background-color: #a66e75;
+  color: white;
+}
+
+.botao-remover {
+  background-color: #f1dada;
+  color: #8b3d45;
+}

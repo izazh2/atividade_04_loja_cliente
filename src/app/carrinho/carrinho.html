@@ -1,49 +1,85 @@
+
 <main class="pagina-carrinho">
 
-    <h2>Meu Carrinho</h2>
-  
-    @if (itens.length > 0) {
-  
-      <section class="lista-carrinho">
-  
-        @for (produto of itens; track $index) {
-  
-          <article class="item-carrinho">
-  
-            <div>
-              <h3>{{ produto.nome }}</h3>
-              <p>{{ produto.descricao }}</p>
-            </div>
-  
-            <strong>
+  <h2>Meu Carrinho</h2>
+
+  @if (itens.length > 0) {
+
+    <section class="lista-carrinho">
+
+      @for (produto of itens; track produto.id) {
+
+        <article class="item-carrinho">
+
+          <div>
+            <h3>{{ produto.nome }}</h3>
+            <p>{{ produto.descricao }}</p>
+
+            <p>
+              Valor unitário:
               {{ produto.preco | currency:'BRL' }}
-            </strong>
-  
-          </article>
-  
-        }
-  
-      </section>
-  
-      <section class="resumo">
-        <h3>Total da compra:</h3>
-  
-        <strong>
-          {{ calcularTotal() | currency:'BRL' }}
-        </strong>
-  
-        <button routerLink="/finalizacao-compra">
-          Finalizar compra
-        </button>
-      </section>
-  
-    } @else {
-  
-      <div class="carrinho-vazio">
-        <h3>Seu carrinho está vazio!</h3>
-        <p>Adicione alguns produtos para começar sua compra.</p>
-      </div>
-  
-    }
-  
-  </main>
+            </p>
+
+            <div class="controle-quantidade">
+              <button
+                type="button"
+                (click)="diminuirQuantidade(produto.id)"
+                aria-label="Diminuir quantidade"
+              >
+                -
+              </button>
+
+              <strong>{{ produto.quantidade }}</strong>
+
+              <button
+                type="button"
+                (click)="aumentarQuantidade(produto.id)"
+                aria-label="Aumentar quantidade"
+              >
+                +
+              </button>
+            </div>
+
+            <button
+              type="button"
+              class="botao-remover"
+              (click)="removerProduto(produto.id)"
+            >
+              Remover
+            </button>
+          </div>
+
+          <strong>
+            {{ (produto.preco * produto.quantidade) | currency:'BRL' }}
+          </strong>
+
+        </article>
+
+      }
+
+    </section>
+
+    <section class="resumo">
+
+      <h3>Total da compra:</h3>
+
+      <strong>
+        {{ calcularTotal() | currency:'BRL' }}
+      </strong>
+
+      <button routerLink="/finalizacao-compra">
+        Finalizar compra
+      </button>
+
+    </section>
+
+  } @else {
+
+    <div class="carrinho-vazio">
+      <h3>Seu carrinho está vazio!</h3>
+      <p>Adicione alguns produtos para começar sua compra.</p>
+    </div>
+
+  }
+
+</main>

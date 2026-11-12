@@ -75,3 +75,40 @@
   .informacoes-produto button:hover {
     background-color: #895960;
   }
+
+
+.filtros-categorias {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 35px;
+}
+
+.filtros-categorias h3 {
+  width: 100%;
+  text-align: center;
+  color: #514542;
+}
+
+.filtros-categorias button {
+  padding: 9px 18px;
+  border: 1px solid #a66e75;
+  border-radius: 20px;
+  background-color: white;
+  color: #a66e75;
+  cursor: pointer;
+}
+
+.filtros-categorias button.ativa,
+.filtros-categorias button:hover {
+  background-color: #a66e75;
+  color: white;
+}
+
+.mensagem {
+  text-align: center;
+  color: #9b6b70;
+  margin: 20px 0;
+}

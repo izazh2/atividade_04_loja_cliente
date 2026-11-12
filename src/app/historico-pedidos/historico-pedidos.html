@@ -1,64 +1,80 @@
+
 <main class="pagina-historico">
 
-    <h2>Meus Pedidos</h2>
-  
-    <p class="descricao">
-      Consulte suas compras e acompanhe seus pedidos.
-    </p>
-  
-    @if (pedidos.length > 0) {
-  
-      <section class="lista-pedidos">
-  
-        @for (pedido of pedidos; track pedido.id) {
-  
-          <article class="card-pedido">
-  
-            <div class="cabecalho-pedido">
-              <h3>Pedido #{{ pedido.id }}</h3>
-  
-              <span>{{ pedido.status }}</span>
-            </div>
-  
-            <p>
-              Data: {{ pedido.data | date:'dd/MM/yyyy HH:mm' }}
-            </p>
-  
-            <h4>Produtos:</h4>
-  
-            @for (produto of pedido.produtos; track $index) {
-              <div class="produto-pedido">
-                <span>{{ produto.nome }}</span>
-  
-                <strong>
-                  {{ produto.preco | currency:'BRL' }}
-                </strong>
-              </div>
-            }
-  
-            <div class="total-pedido">
-              <strong>Total:</strong>
-  
+  <h2>Meus Pedidos</h2>
+
+  <p class="descricao">
+    Consulte suas compras e acompanhe seus pedidos.
+  </p>
+
+  @if (carregando) {
+
+    <section class="historico-vazio">
+      <p>Carregando seus pedidos...</p>
+    </section>
+
+  } @else if (mensagemErro) {
+
+    <section class="historico-vazio">
+      <h3>Não foi possível carregar seus pedidos.</h3>
+      <p>{{ mensagemErro }}</p>
+      <button type="button" (click)="listarPedidos()">
+        Tentar novamente
+      </button>
+    </section>
+
+  } @else if (pedidos.length > 0) {
+
+    <section class="lista-pedidos">
+
+      @for (pedido of pedidos; track pedido.id) {
+
+        <article class="card-pedido">
+
+          <div class="cabecalho-pedido">
+            <h3>Pedido #{{ pedido.id }}</h3>
+            <span>{{ pedido.status }}</span>
+          </div>
+
+          <p>
+            Data: {{ pedido.data | date:'dd/MM/yyyy' }}
+          </p>
+
+          <h4>Itens:</h4>
+
+          @for (produto of pedido.produtos; track $index) {
+
+            <div class="produto-pedido">
+              <span>{{ produto.nome }}</span>
+
               <strong>
-                {{ pedido.total | currency:'BRL' }}
+                {{ produto.preco | currency:'BRL' }}
               </strong>
             </div>
-  
-            <p>Pagamento: {{ pedido.formaPagamento }}</p>
-  
-          </article>
-  
-        }
-  
-      </section>
-  
-    } @else {
-  
-      <section class="historico-vazio">
-        <h3>Você ainda não realizou pedidos.</h3>
-        <p>Quando fizer uma compra, ela aparecerá aqui.</p>
-      </section>
-  
-    }
-  
-  </main>
+
+          }
+
+          <div class="total-pedido">
+            <strong>Total:</strong>
+
+            <strong>
+              {{ pedido.total | currency:'BRL' }}
+            </strong>
+          </div>
+
+        </article>
+
+      }
+
+    </section>
+
+  } @else {
+
+    <section class="historico-vazio">
+      <h3>Você ainda não realizou pedidos.</h3>
+      <p>Quando fizer uma compra, ela aparecerá aqui.</p>
+    </section>
+
+  }
+
+</main>

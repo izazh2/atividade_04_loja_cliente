@@ -69,3 +69,10 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+
+
+.mensagem-erro {
+  color: #c0392b;
+  margin: 15px 0;
+  text-align: center;
+}

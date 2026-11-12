@@ -1,3 +1,4 @@
+
 <header class="menu">
   <nav>
     <a
@@ -8,8 +9,6 @@
     </a>
 
     <a routerLink="/produtos" routerLinkActive="ativo">
-      Produtos
-    </a>
 
     <a routerLink="/servicos" routerLinkActive="ativo">
       Serviços
@@ -19,7 +18,9 @@
       Carrinho
     </a>
 
-    <a routerLink="/perfil" routerLinkActive="ativo">
+    <a
+      [routerLink]="clienteLogado ? '/area-cliente' : '/perfil'"
+      routerLinkActive="ativo">
       Meu Perfil
     </a>
   </nav>

@@ -50,18 +50,39 @@ export class PessoaCadastroComponent {
 
     if (formulario.invalid) {
       this.erro = true;
-      this.mensagem = 'Preencha todos os campos obrigatórios antes de cadastrar.';
+      this.mensagem =
+        'Preencha todos os campos obrigatórios antes de cadastrar.';
       return;
     }
 
     this.carregando = true;
 
     this.apiService.cadastrarCliente(this.cliente).subscribe({
-      next: () => {
+      next: (resposta: any) => {
+
+        const idPessoa =
+          resposta?.idPessoa ??
+          resposta?.idpessoa ??
+          resposta?.pessoa?.idPessoa ??
+          resposta?.cliente?.idPessoa;
+
+        if (idPessoa == null) {
+          this.erro = true;
+          this.carregando = false;
+          this.mensagem =
+            'Cadastro realizado, mas a API não retornou o ID do cliente. Precisamos verificar a resposta do backend.';
+          console.log('Resposta do cadastro:', resposta);
+          return;
+        }
+
+        localStorage.setItem('idPessoa', String(idPessoa));
+
         this.mensagem = 'Cliente cadastrado com sucesso!';
         alert(this.mensagem);
+
         this.router.navigate(['/area-cliente']);
       },
+
       error: (erro) => {
         console.error('Erro ao cadastrar cliente:', erro);
 
